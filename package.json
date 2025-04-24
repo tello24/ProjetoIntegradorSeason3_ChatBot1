@@ -1,0 +1,45 @@
+{
+  "name": "projetointegradorseason3_chatbot1",
+  "version": "1.0.0",
+  "description": "Chatbot para restaurante - Projeto Integrador Season 3",
+  "main": "Chatbot/frontend/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tello24/ProjetoIntegradorSeason3_ChatBot1.git"
+  },
+  "keywords": [
+    "chatbot",
+    "restaurante",
+    "electron"
+  ],
+  "author": "Seu Nome",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tello24/ProjetoIntegradorSeason3_ChatBot1/issues"
+  },
+  "homepage": "https://github.com/tello24/ProjetoIntegradorSeason3_ChatBot1#readme",
+  "devDependencies": {
+    "electron": "^35.2.1",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.chatbot.restaurante",
+    "productName": "Chatbot Restaurante",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "Chatbot/frontend/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "Chatbot/build/favicon.ico"
+    }
+  }
+}
