@@ -7,6 +7,9 @@
     "start": "electron .",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
+    "clean:hard": "rd /s /q dist node_modules 2> nul || true",
+    "rebuild": "npm run clean:hard && npm install && npm run build:win -- --force",
+    "dev": "start cmd /keywords \"npm run clean:hard && electron .\"",
     "build:mac": "electron-builder --mac",
     "build:linux": "electron-builder --linux",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -69,4 +72,5 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.0"
   }
+  
 }
