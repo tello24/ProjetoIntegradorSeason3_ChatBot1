@@ -48,3 +48,10 @@ Erros no build: Verifique o caminho do main no package.json
 npm run build -- --force
 
 npm run build:win -- --force --x64 --config.extraResources.from=node_modules/electron/dist/resources/icudtl.dat --config.win.icon=Chatbot/build/icon.ico
+
+
+
+
+#### Instalação do gemini ####
+
+npm install @google/generative-ai
