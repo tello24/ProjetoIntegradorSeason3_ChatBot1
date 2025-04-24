@@ -45,11 +45,14 @@ Erros no build: Verifique o caminho do main no package.json
 
 🔗 **Atualizar a build:** 🔗
 
+\\ __PRIMEIRO = REINICIAR O VSCODE__ //
+
+
+npm run rebuild
+
+rm -rf dist node_modules
+npm install
 npm run build -- --force
-
-npm run build:win -- --force --x64 --config.extraResources.from=node_modules/electron/dist/resources/icudtl.dat --config.win.icon=Chatbot/build/icon.ico
-
-
 
 
 #### Instalação do gemini ####
