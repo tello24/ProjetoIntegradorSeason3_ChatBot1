@@ -1,29 +1,41 @@
-# Variáveis de ambiente
+### Configurações sensíveis ###
 .env
+config.json
+secrets/*
 
-# Dependências
+### Dependências ###
 node_modules/
 .npm
 .pnpm
 .yarn-integrity
+package-lock.json
+yarn.lock
 
-# Build do Electron
+### Build e distribuição ###
 dist/
 release-builds/
 out/
 *.exe
 *.dmg
 *.AppImage
+*.snap
+*.deb
+*.rpm
+installer/
+bin/
 
-# Cache e logs
+### Cache e logs ###
 .cache/
 .npmrc
-electron-builder-cache.json
+.npm/
+electron-builder-cache/
+electron-builder.yaml
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+logs/
 
-# Sistema e IDE
+### Sistema e IDE ###
 .DS_Store
 .idea/
 .vscode/
@@ -32,3 +44,39 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+*.code-workspace
+
+### Arquivos temporários ###
+*.tmp
+*.temp
+*.bak
+~$*
+
+### Electron específico ###
+app-update.yml
+*.dSYM
+*.breakpad
+*.pdb
+*.map
+*.un~
+Thumbs.db
+
+### Arquivos de desenvolvimento ###
+.preload.js
+main.prod.js
+main.dev.js
+webpack.generated.js
+
+### Testes ###
+coverage/
+.nyc_output/
+*.junit
+*.xml
+*.html
+
+### Outros ###
+*.log
+*.pid
+*.seed
+*.pid.lock
+*.tsbuildinfo
