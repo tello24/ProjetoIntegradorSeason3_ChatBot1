@@ -6,6 +6,9 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,8 +33,10 @@
   "build": {
     "appId": "com.chatbot.restaurante",
     "productName": "Chatbot Restaurante",
+    "copyright": "Copyright © 2024 ${author}",
     "directories": {
-      "output": "dist"
+      "output": "dist",
+      "buildResources": "Chatbot/build"
     },
     "files": [
       "Chatbot/frontend/**/*",
@@ -39,7 +44,26 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "Chatbot/build/favicon.ico"
-    }
+      "icon": "Chatbot/build/icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "Chatbot/build/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "Chatbot/build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraResources": [
+      {
+        "from": "node_modules/electron/dist/resources/icudtl.dat",
+        "to": "."
+      }
+    ]
   }
 }
