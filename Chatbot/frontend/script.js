@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Mensagem inicial
   setTimeout(() => {
-      addBotMessage('Olá! Bem-vindo ao Restaurante Delícia. Como posso ajudar?');
+      addBotMessage('Olá! Bem-vindo ao Restaurante ahn Oruam...ahn . Como posso ajudar?');
       addBotMessage('Você pode perguntar sobre nosso cardápio, horário de funcionamento ou fazer uma reserva.');
   }, 500);
   
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   const restaurantInfo = {
       hours: "Funcionamos de terça a domingo:\n- Almoço: 11:30 às 15:00\n- Jantar: 19:00 às 23:00",
-      address: "Rua das Delícias, 123 - Centro",
+      address: "Rua dos bills!", 123 - Centro",
       phone: "(11) 1234-5678"
   };
   
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
               addBotMessage(`Telefone para contato: ${restaurantInfo.phone}`);
           }
           else if (lowerMsg.includes('ola') || lowerMsg.includes('olá') || lowerMsg.includes('oi')) {
-              addBotMessage('Olá! Bem-vindo ao Restaurante Delícia. Em que posso ajudar?');
+              addBotMessage('Olá! Bem-vindo ao Restaurante ahn quem?. Em que posso ajudar?');
           }
           else {
               addBotMessage('Desculpe, não entendi. Você pode perguntar sobre nosso cardápio, horário de funcionamento ou fazer uma reserva.');
