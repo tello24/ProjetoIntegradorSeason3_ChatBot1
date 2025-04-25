@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   const restaurantInfo = {
       hours: "Funcionamos de terça a domingo:\n- Almoço: 11:30 às 15:00\n- Jantar: 19:00 às 23:00",
-      address: "Rua dos bills!", 123 - Centro",
+      address: "Rua dos bills!, 123 - Centro",
       phone: "(11) 1234-5678"
   };
   
