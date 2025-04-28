@@ -22,20 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
       address: 'Rua dos Sabores, 123 – Centro',
       phone: '(11) 1234-5678'
     };
-    const menu = {
-      Entradas: [
-        { name: 'Bruschetta', price: 'R$ 18,90' },
-        { name: 'Carpaccio',  price: 'R$ 32,90' }
-      ],
-      'Pratos Principais': [
-        { name: 'Filé Mignon',     price: 'R$ 89,90' },
-        { name: 'Risoto de Funghi', price: 'R$ 65,90' }
-      ],
-      Sobremesas: [
-        { name: 'Tiramisù',    price: 'R$ 24,90' },
-        { name: 'Panna Cotta', price: 'R$ 22,90' }
-      ]
-    };
+const menu = {
+    'Pratos Principais': [
+      { name: 'Filé de Frango Grelhado',      price: 'R$ 28,99' },
+      { name: 'Linguiça Toscana Grelhada',    price: 'R$ 28,99' },
+      { name: 'Linguiça Calabresa Acebolada', price: 'R$ 28,99' },
+      { name: 'Nuggets de Frango',            price: 'R$ 28,99' },
+      { name: '------------------', price: '------------------' }
+    ],
+
+    'Saladas': [
+      { name: 'Salada com Filé de Frango',                  price: 'R$ 26,99' },
+      { name: 'Salada com Omelete',                         price: 'R$ 26,99' },
+      { name: 'Salada com Atum',                            price: 'R$ 26,99' },
+      { name: 'Salada Caesar',                              price: 'R$ 27,99' },
+      { name: 'Salada com Kibe Vegano ou Quiche',           price: 'R$ 31,99' }
+    ]
+  };
+  
   
     // BOAS-VINDAS
     setTimeout(() => {
@@ -272,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleKitchenLogin() {
       const user = document.getElementById('kitchen-user').value;
       const pass = document.getElementById('kitchen-pass').value;
-      if (user === 'CozinhaPoli' && pass === 'teste123') {
+      if (user === 'Cozinha@sistemapoliedro.com.br' && pass === 'teste123') {
         window.location.href = 'kitchen.html';
       } else {
         alert('Credenciais inválidas!');

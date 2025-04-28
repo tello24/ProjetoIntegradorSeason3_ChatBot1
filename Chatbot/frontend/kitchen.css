@@ -1,10 +1,12 @@
 /* kitchen.css */
+
+/* Container principal */
 .kitchen-interface {
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   height: 100vh;
   margin: 0 auto;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.97);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   display: flex;
@@ -12,6 +14,7 @@
   overflow: hidden;
 }
 
+/* Cabeçalho */
 .kitchen-header {
   display: flex;
   justify-content: space-between;
@@ -19,14 +22,16 @@
   background: var(--primary);
   color: #fff;
   padding: 16px 20px;
+  flex-shrink: 0;
 }
 
 .kitchen-header h1 {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   margin: 0;
 }
 
-#kitchen-logout-btn {
+.kitchen-header-buttons button {
+  margin-left: 10px;
   background: #fff;
   color: var(--primary);
   border: none;
@@ -34,34 +39,76 @@
   border-radius: 20px;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 0.9rem;
 }
 
-#kitchen-logout-btn:hover {
+.kitchen-header-buttons button:hover {
   background: #f0f0f0;
   transform: translateY(-2px);
 }
 
+/* Editor de Cardápio */
+.menu-editor {
+  padding: 20px;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+.menu-editor h2 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: var(--dark);
+}
+
+.menu-editor textarea {
+  width: 100%;
+  height: 180px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.menu-editor #save-menu-btn {
+  margin-top: 10px;
+  background: var(--secondary);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.menu-editor #save-menu-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Container de pedidos */
 .kitchen-orders {
   flex: 1;
   overflow-x: auto;
   padding: 20px;
 }
 
-.kitchen-orders table {
+/* Tabela */
+#orders-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 650px;
+  min-width: 700px;
 }
 
-.kitchen-orders th,
-.kitchen-orders td {
+#orders-table th,
+#orders-table td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: left;
   font-size: 0.9rem;
 }
 
-.kitchen-orders th {
+#orders-table th {
   background: var(--primary);
   color: #fff;
   font-weight: 600;
@@ -75,15 +122,15 @@
   margin-top: 20px;
 }
 
-/* Se não houver pedidos, esconde a tabela e mostra a mensagem */
-.kitchen-orders.no-orders table {
+/* Quando não há pedidos */
+.kitchen-orders.no-orders #orders-table {
   display: none;
 }
 .kitchen-orders.no-orders #no-orders-msg {
   display: block;
 }
 
-/* Botões de ação */
+/* Botões de ação na tabela */
 .action-btn {
   padding: 4px 8px;
   margin-right: 4px;
@@ -103,26 +150,32 @@
 }
 
 /* Responsividade */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .kitchen-interface {
     height: 100%;
     border-radius: 0;
   }
-  .kitchen-orders table {
+  #orders-table {
     min-width: 100%;
   }
-  .kitchen-orders th,
-  .kitchen-orders td {
+  #orders-table th,
+  #orders-table td {
     font-size: 0.8rem;
     padding: 8px;
   }
   .kitchen-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px;
   }
-  #kitchen-logout-btn {
+  .kitchen-header-buttons {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+  }
+  .kitchen-header-buttons button {
+    width: 100%;
+    margin: 4px 0;
     text-align: center;
   }
 }
