@@ -1,3 +1,11 @@
+:root {
+  --primary: #e74c3c;    /* Vermelho vibrante (tomate maduro) */
+  --secondary: #2ecc71;  /* Verde fresco (manjericão) */
+  --accent: #3498db;     /* Azul refrescante (água cristalina) */
+  --dark: #2c3e50;       /* Profundidade (vinho envelhecido) */
+  --light: #f5f5f5;      /* Toalha de mesa */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +15,7 @@
 
 body {
   height: 100vh;
-  background: #f5f5f5; /* fundo cinza claro */
+  background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3') center/cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,112 +23,187 @@ body {
 
 .chat-wrapper {
   width: 400px;
-  height: 650px; /* AUMENTEI A ALTURA AQUI */
-  background: #fff;
+  height: 650px;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .chat-header {
-  background: #e74c3c;
-  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--dark));
+  color: white;
   text-align: center;
   padding: 20px;
   position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .chat-logo {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   position: absolute;
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
+  border: 2px solid white;
+  object-fit: cover;
 }
 
 .chat-header h1 {
   font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .chat-messages {
   flex: 1;
-  padding: 15px;
+  padding: 20px;
   overflow-y: auto;
-  background: #fafafa;
+  background: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png');
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
+/* Mensagens com animação e sombra */
 .message {
-  margin-bottom: 12px;
   padding: 12px 18px;
   border-radius: 18px;
-  max-width: 75%;
+  max-width: 80%;
   word-wrap: break-word;
-  display: inline-block;
+  line-height: 1.4;
+  position: relative;
+  animation: fadeIn 0.4s ease-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .user-message {
-  background: #3498db;
-  color: #fff;
-  margin-left: auto;
+  background: var(--accent);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 5px;
 }
 
 .bot-message {
-  background: #ecf0f1;
-  color: #333;
+  background: white;
+  color: var(--dark);
+  align-self: flex-start;
+  border-bottom-left-radius: 5px;
+  border: 1px solid #eee;
 }
 
 .chat-input-area {
   display: flex;
-  padding: 12px;
-  border-top: 1px solid #eee;
-  background: #fff;
+  padding: 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background: white;
 }
 
 #user-input {
   flex: 1;
   padding: 12px 18px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
+  border-radius: 25px;
+  border: 1px solid #ddd;
   outline: none;
   font-size: 14px;
+  transition: all 0.3s;
+}
+
+#user-input:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
 }
 
 #send-button {
-  background: #2ecc71;
+  background: var(--secondary);
   border: none;
-  padding: 0 18px;
+  width: 45px;
+  height: 45px;
   margin-left: 10px;
   border-radius: 50%;
+  color: white;
   font-size: 18px;
-  color: #fff;
   cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#send-button:hover {
+  background: #27ae60;
+  transform: scale(1.05);
 }
 
 .quick-buttons {
-  background: #fff;
-  padding: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  background: white;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   border-top: 1px solid #eee;
 }
 
 .quick-btn, #view-reservation-btn {
-  background: #e74c3c;
-  color: #fff;
+  background: var(--primary);
+  color: white;
   border: none;
-  padding: 8px 14px;
-  border-radius: 18px;
+  padding: 10px;
+  border-radius: 20px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .quick-btn:hover, #view-reservation-btn:hover {
   background: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Barra de rolagem estilizada */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+/* Efeito de digitação (para mensagens do bot) */
+.typing-indicator::after {
+  content: '...';
+  animation: typing 1.5s infinite;
+}
+
+@keyframes typing {
+  0%, 60%, 100% { opacity: 0.4; }
+  30% { opacity: 1; }
 }
