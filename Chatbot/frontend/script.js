@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Mensagem inicial
   setTimeout(() => {
-      addBotMessage('Olá! Bem-vindo ao Restaurante ahn Oruam...ahn . Como posso ajudar?');
+      addBotMessage('Olá! Bem-vindo ao Restaurante Poliedro. Como posso ajudar?');
       addBotMessage('Você pode perguntar sobre nosso cardápio, horário de funcionamento ou fazer uma reserva.');
   }, 500);
   
@@ -139,11 +139,20 @@ document.addEventListener('DOMContentLoaded', function() {
               <input type="text" id="res-name" placeholder="Seu nome">
               <input type="date" id="res-date">
               <select id="res-time">
-                  <option value="19:00">19:00</option>
+                  <option value="12:00">12:00</option>
+                  <option value="12:30">12:30</option>
+                  <option value="13:00">13:00</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:00">14:00</option>
+                  <option value="14:30">14:30</option>
                   <option value="19:30">19:30</option>
                   <option value="20:00">20:00</option>
                   <option value="20:30">20:30</option>
                   <option value="21:00">21:00</option>
+                  <option value="21:30">21:30</option>
+                  <option value="22:00">22:00</option>
+                  <option value="22:30">22:30</option>
+                  <option value="66:66">66:66</option>
               </select>
               <input type="number" id="res-people" placeholder="Número de pessoas" min="1">
               <button id="confirm-res">Confirmar Reserva</button>
