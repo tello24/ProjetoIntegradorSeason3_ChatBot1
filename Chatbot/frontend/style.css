@@ -15,7 +15,8 @@
 
 body {
   height: 100vh;
-  background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3')
+              center/cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,7 +71,6 @@ body {
   border-radius: 18px;
   max-width: 80%;
   line-height: 1.4;
-  position: relative;
   animation: fadeIn 0.4s ease-out;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -137,7 +137,10 @@ body {
   border-top: 1px solid #eee;
 }
 
-.quick-btn, #view-reservation-btn {
+.quick-btn,
+#view-reservation-btn,
+#order-button,
+#view-order-btn {
   background: var(--primary);
   color: #fff;
   border: none;
@@ -145,21 +148,24 @@ body {
   border-radius: 20px;
   font-size: 14px;
   cursor: pointer;
-  transition: 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  transition: 0.3s;
 }
 
-.quick-btn:hover, #view-reservation-btn:hover {
+.quick-btn:hover,
+#view-reservation-btn:hover,
+#order-button:hover,
+#view-order-btn:hover {
   background: #c0392b;
   transform: translateY(-2px);
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -169,4 +175,113 @@ body {
 .chat-messages::-webkit-scrollbar-thumb {
   background: var(--primary);
   border-radius: 3px;
+}
+
+/* Formulário Reserva */
+.reservation-form input,
+.reservation-form select,
+.reservation-form textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.reservation-form button {
+  margin-top: 10px;
+  background: var(--secondary);
+  border: none;
+  color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.reservation-form button:hover {
+  transform: translateY(-2px);
+}
+
+.reservation-confirmation,
+.reservation-details {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 15px;
+  background: #fff;
+}
+
+.reservation-details h3,
+.reservation-confirmation h3 {
+  margin-bottom: 10px;
+}
+
+.reservation-actions button {
+  background: var(--primary);
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.reservation-actions button:hover {
+  transform: translateY(-2px);
+}
+
+/* Formulário Pedido */
+.order-form input,
+.order-form textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.order-form button {
+  margin-top: 10px;
+  background: var(--secondary);
+  border: none;
+  color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.order-form button:hover {
+  transform: translateY(-2px);
+}
+
+.order-confirmation,
+.order-details {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 15px;
+  background: #fff;
+}
+
+.order-details h3,
+.order-confirmation h3 {
+  margin-bottom: 10px;
+}
+
+.order-actions button {
+  background: var(--primary);
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.order-actions button:hover {
+  transform: translateY(-2px);
 }
