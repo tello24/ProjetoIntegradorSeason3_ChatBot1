@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ELEMENTOS PRINCIPAIS
+    const mainInterface      = document.getElementById('main-interface');
+    const loginScreen        = document.getElementById('kitchen-login-screen');
     const chatMessages       = document.getElementById('chat-messages');
     const userInput          = document.getElementById('user-input');
     const sendButton         = document.getElementById('send-button');
@@ -6,7 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewReservationBtn = document.getElementById('view-reservation-btn');
     const orderButton        = document.getElementById('order-button');
     const viewOrderBtn       = document.getElementById('view-order-btn');
+    const kitchenLoginBtn    = document.getElementById('kitchen-login-btn');
+    const loginBackBtn       = document.getElementById('login-back-btn');
   
+    // DADOS
     const restaurantInfo = {
       hours: [
         'Funcionamos de terça a domingo:',
@@ -16,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
       address: 'Rua dos Sabores, 123 – Centro',
       phone: '(11) 1234-5678'
     };
-  
     const menu = {
       Entradas: [
         { name: 'Bruschetta', price: 'R$ 18,90' },
@@ -32,13 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
       ]
     };
   
-    // Boas-vindas
+    // BOAS-VINDAS
     setTimeout(() => {
       addBotMessage('🍽️ Bem-vindo ao Restaurante Poliedro!');
       addBotMessage('Como posso ajudar? Use os botões rápidos ou digite sua dúvida.');
     }, 500);
   
-    // Listeners estáticos
+    // LISTENERS ESTÁTICOS
     sendButton.addEventListener('click', sendMessage);
     userInput.addEventListener('keypress', e => {
       if (e.key === 'Enter') sendMessage();
@@ -52,76 +57,60 @@ document.addEventListener('DOMContentLoaded', () => {
     viewReservationBtn.addEventListener('click', showReservation);
     orderButton.addEventListener('click', startOrderProcess);
     viewOrderBtn.addEventListener('click', showOrder);
+    kitchenLoginBtn.addEventListener('click', () => {
+      mainInterface.style.display = 'none';
+      loginScreen.style.display   = 'flex';
+    });
+    loginBackBtn.addEventListener('click', () => {
+      loginScreen.style.display   = 'none';
+      mainInterface.style.display = 'block';
+    });
   
-    // Captura clicks em botões dinâmicos
-    chatMessages.addEventListener('click', e => {
+    // EVENT DELEGATION (CLICK EM BOTÕES DINÂMICOS)
+    document.body.addEventListener('click', e => {
       const btn = e.target.closest('button');
       if (!btn) return;
-  
       switch (btn.id) {
-        // Reserva
-        case 'confirm-res-btn':
-          confirmReservation(btn);
-          break;
+        // RESERVA
+        case 'confirm-res-btn':    confirmReservation(btn);    break;
         case 'modify-res-btn':
-        case 'edit-res-btn':
-          startReservationProcess();
-          break;
-        case 'cancel-res-btn':
-          cancelReservation();
-          break;
-  
-        // Pedido
-        case 'confirm-order-btn':
-          confirmOrder(btn);
-          break;
+        case 'edit-res-btn':       startReservationProcess();  break;
+        case 'cancel-res-btn':     cancelReservation();       break;
+        // PEDIDO
+        case 'confirm-order-btn':  confirmOrder(btn);          break;
         case 'modify-order-btn':
-        case 'edit-order-btn':
-          startOrderProcess();
-          break;
-        case 'cancel-order-btn':
-          cancelOrder();
-          break;
+        case 'edit-order-btn':     startOrderProcess();        break;
+        case 'cancel-order-btn':   cancelOrder();              break;
+        // LOGIN COZINHA
+        case 'login-submit-btn':   handleKitchenLogin();       break;
       }
     });
   
-    // Envia mensagem do usuário
+    // FUNÇÕES DE CHAT
     function sendMessage() {
       const text = userInput.value.trim();
       if (!text) return;
       addUserMessage(text);
       userInput.value = '';
-      setTimeout(() => processUserMessage(text), 500);
+      setTimeout(() => processUserMessage(text), 400);
     }
   
-    // Decide ação pela mensagem
     function processUserMessage(msg) {
       const m = msg.toLowerCase();
-      if (m.includes('cardápio') || m.includes('menu')) {
-        showMenu();
-      } else if (m.includes('horário') || m.includes('funcionamento')) {
-        showHours();
-      } else if (m.includes('reserv') || m.includes('mesa')) {
-        startReservationProcess();
-      } else if (m.includes('minha reserva') || m.includes('ver reserva')) {
-        showReservation();
-      } else if (m.includes('pedido')) {
-        startOrderProcess();
-      } else if (m.includes('ver pedido')) {
-        showOrder();
-      } else {
-        addBotMessage('Desculpe, não entendi. Pode reformular?');
-      }
+      if (m.includes('cardápio') || m.includes('menu'))       showMenu();
+      else if (m.includes('horário') || m.includes('funcionamento')) showHours();
+      else if (m.includes('reserv') || m.includes('mesa'))    startReservationProcess();
+      else if (m.includes('minha reserva') || m.includes('ver reserva')) showReservation();
+      else if (m.includes('pedido'))                         startOrderProcess();
+      else if (m.includes('ver pedido'))                     showOrder();
+      else                                                   addBotMessage('Desculpe, não entendi. Pode reformular?');
     }
   
-    // ─── Cardápio e Horários ─────────────────────────────────────────────────────
     function showMenu() {
       let html = '<h3>🍽️ Nosso Cardápio</h3>';
       for (const [cat, items] of Object.entries(menu)) {
         html += `<h4>${cat}</h4><ul>`;
-        items.forEach(i => {
-          html += `<li><strong>${i.name}</strong> – ${i.price}</li>`;
-        });
+        items.forEach(i => html += `<li><strong>${i.name}</strong> – ${i.price}</li>`);
         html += '</ul>';
       }
       html += '<p>Quer fazer um pedido ou reserva?</p>';
@@ -133,14 +122,14 @@ document.addEventListener('DOMContentLoaded', () => {
       addBotMessage(`📍 ${restaurantInfo.address}<br>📞 ${restaurantInfo.phone}`);
     }
   
-    // ─── Fluxo de Reserva ────────────────────────────────────────────────────────
+    // FLUXO DE RESERVA
     function startReservationProcess() {
       const today = new Date().toISOString().split('T')[0];
-      const form = `
+      const formHTML = `
         <div class="reservation-form">
           <h3>📅 Fazer Reserva</h3>
-          <input type="text" id="res-name" placeholder="Seu Nome*" />
-          <input type="date" id="res-date" min="${today}" />
+          <input type="text"    id="res-name"    placeholder="Seu Nome*" />
+          <input type="date"    id="res-date"    min="${today}" />
           <select id="res-time">
             <option value="">Horário*</option>
             <optgroup label="Almoço">${generateTimeOptions(11,30,14,30,30)}</optgroup>
@@ -151,45 +140,37 @@ document.addEventListener('DOMContentLoaded', () => {
             ${[1,2,3,4,5,6].map(n=>`<option value="${n}">${n}</option>`).join('')}
             <option value="7+">7+</option>
           </select>
-          <input type="tel" id="res-phone" placeholder="Telefone*" />
+          <input type="tel"     id="res-phone"   placeholder="Telefone*" />
           <textarea id="res-notes" placeholder="Observações"></textarea>
           <button id="confirm-res-btn">Confirmar Reserva</button>
-        </div>
-      `;
-      addBotMessage(form);
+        </div>`;
+      addBotMessage(formHTML);
     }
   
     function confirmReservation(btn) {
-      const form = btn.closest('.reservation-form');
-      const name   = form.querySelector('#res-name').value.trim();
-      const date   = form.querySelector('#res-date').value;
-      const time   = form.querySelector('#res-time').value;
-      const ppl    = form.querySelector('#res-people').value;
-      const phone  = form.querySelector('#res-phone').value.trim();
-      const notes  = form.querySelector('#res-notes').value.trim();
-  
-      if (!name || !date || !time || !ppl || !phone) {
+      const f    = btn.closest('.reservation-form');
+      const name = f.querySelector('#res-name').value.trim();
+      const date = f.querySelector('#res-date').value;
+      const time = f.querySelector('#res-time').value;
+      const ppl  = f.querySelector('#res-people').value;
+      const phone= f.querySelector('#res-phone').value.trim();
+      const notes= f.querySelector('#res-notes').value.trim();
+      if (!name||!date||!time||!ppl||!phone) {
         addBotMessage('⚠️ Preencha todos os campos obrigatórios!');
         return;
       }
-  
-      const reservation = { name, date, time, ppl, phone, notes, status: 'confirmada' };
+      const reservation = { name, date, time, ppl, phone, notes, status:'confirmada' };
       localStorage.setItem('poliedroReservation', JSON.stringify(reservation));
-  
-      const fmt = new Date(date).toLocaleDateString('pt-BR', {
-        weekday:'long', day:'numeric', month:'long'
-      });
-      const html = `
+      const fmt = new Date(date).toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+      addBotMessage(`
         <div class="reservation-confirmation">
           <h3>✅ Reserva Confirmada!</h3>
           <p><strong>Nome:</strong> ${name}</p>
           <p><strong>Data:</strong> ${fmt} às ${time}</p>
           <p><strong>Pessoas:</strong> ${ppl}</p>
-          ${notes? `<p><strong>Obs.:</strong> ${notes}</p>` : ''}
+          ${notes?`<p><strong>Obs.:</strong> ${notes}</p>`:''}
           <button id="modify-res-btn">Alterar Reserva</button>
-        </div>
-      `;
-      addBotMessage(html);
+        </div>`);
     }
   
     function showReservation() {
@@ -198,24 +179,20 @@ document.addEventListener('DOMContentLoaded', () => {
         addBotMessage('Você não tem reservas ativas. Deseja fazer uma?');
         return;
       }
-      const fmt = new Date(res.date).toLocaleDateString('pt-BR', {
-        weekday:'long', day:'numeric', month:'long'
-      });
-      const html = `
+      const fmt = new Date(res.date).toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+      addBotMessage(`
         <div class="reservation-details">
           <h3>📋 Sua Reserva</h3>
           <p><strong>Status:</strong> ${res.status}</p>
           <p><strong>Nome:</strong> ${res.name}</p>
           <p><strong>Data:</strong> ${fmt} às ${res.time}</p>
           <p><strong>Pessoas:</strong> ${res.ppl}</p>
-          ${res.notes? `<p><strong>Obs.:</strong> ${res.notes}</p>` : ''}
+          ${res.notes?`<p><strong>Obs.:</strong> ${res.notes}</p>`:''}
           <div class="reservation-actions">
             <button id="cancel-res-btn">Cancelar Reserva</button>
             <button id="edit-res-btn">Alterar Reserva</button>
           </div>
-        </div>
-      `;
-      addBotMessage(html);
+        </div>`);
     }
   
     function cancelReservation() {
@@ -225,44 +202,43 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    // ─── Fluxo de Pedido ─────────────────────────────────────────────────────────
+    // FLUXO DE PEDIDO
     function startOrderProcess() {
-      const form = `
+      addBotMessage(`
         <div class="order-form">
           <h3>🛒 Fazer Pedido</h3>
-          <input type="text" id="order-item" placeholder="Nome do Item*" />
-          <input type="number" id="order-qty" placeholder="Quantidade*" min="1" />
+          <input type="text"   id="order-item"  placeholder="Nome do Item*" />
+          <input type="number" id="order-qty"   placeholder="Quantidade*" min="1" />
           <textarea id="order-notes" placeholder="Observações"></textarea>
           <button id="confirm-order-btn">Confirmar Pedido</button>
-        </div>
-      `;
-      addBotMessage(form);
+        </div>`);
     }
   
     function confirmOrder(btn) {
-      const form = btn.closest('.order-form');
-      const item = form.querySelector('#order-item').value.trim();
-      const qty  = form.querySelector('#order-qty').value;
-      const notes= form.querySelector('#order-notes').value.trim();
-  
+      const f    = btn.closest('.order-form');
+      const item = f.querySelector('#order-item').value.trim();
+      const qty  = f.querySelector('#order-qty').value;
+      const notes= f.querySelector('#order-notes').value.trim();
       if (!item || !qty) {
         addBotMessage('⚠️ Informe o item e a quantidade!');
         return;
       }
-  
-      const order = { item, qty, notes, status: 'enviado' };
+      // salva histórico de pedidos
+      const orders = JSON.parse(localStorage.getItem('poliedroOrders')||'[]');
+      const now    = new Date().toISOString();
+      const order  = { item, qty, notes, status:'enviado', date: now };
+      orders.push(order);
+      localStorage.setItem('poliedroOrders', JSON.stringify(orders));
+      // último pedido para consulta cliente
       localStorage.setItem('poliedroOrder', JSON.stringify(order));
-  
-      const html = `
+      addBotMessage(`
         <div class="order-confirmation">
           <h3>✅ Pedido Recebido!</h3>
           <p><strong>Item:</strong> ${item}</p>
           <p><strong>Quantidade:</strong> ${qty}</p>
-          ${notes? `<p><strong>Obs.:</strong> ${notes}</p>` : ''}
+          ${notes?`<p><strong>Obs.:</strong> ${notes}</p>`:''}
           <button id="modify-order-btn">Alterar Pedido</button>
-        </div>
-      `;
-      addBotMessage(html);
+        </div>`);
     }
   
     function showOrder() {
@@ -271,20 +247,18 @@ document.addEventListener('DOMContentLoaded', () => {
         addBotMessage('Você não tem pedidos ativos. Deseja fazer um?');
         return;
       }
-      const html = `
+      addBotMessage(`
         <div class="order-details">
           <h3>📦 Seu Pedido</h3>
           <p><strong>Status:</strong> ${o.status}</p>
           <p><strong>Item:</strong> ${o.item}</p>
           <p><strong>Quantidade:</strong> ${o.qty}</p>
-          ${o.notes? `<p><strong>Obs.:</strong> ${o.notes}</p>` : ''}
+          ${o.notes?`<p><strong>Obs.:</strong> ${o.notes}</p>`:''}
           <div class="order-actions">
             <button id="cancel-order-btn">Cancelar Pedido</button>
             <button id="edit-order-btn">Alterar Pedido</button>
           </div>
-        </div>
-      `;
-      addBotMessage(html);
+        </div>`);
     }
   
     function cancelOrder() {
@@ -294,7 +268,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   
-    // ─── Utilitários ─────────────────────────────────────────────────────────────
+    // LOGIN COZINHA
+    function handleKitchenLogin() {
+      const user = document.getElementById('kitchen-user').value;
+      const pass = document.getElementById('kitchen-pass').value;
+      if (user === 'CozinhaPoli' && pass === 'teste123') {
+        window.location.href = 'kitchen.html';
+      } else {
+        alert('Credenciais inválidas!');
+      }
+    }
+  
+    // UTILITÁRIOS
     function generateTimeOptions(sh, sm, eh, em, step) {
       const opts = [];
       for (let h = sh; h <= eh; h++) {
