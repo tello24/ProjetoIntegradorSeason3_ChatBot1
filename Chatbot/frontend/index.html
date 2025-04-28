@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chatbot – Restaurante Poliedro</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-wrapper">
+  <!-- INTERFACE PRINCIPAL -->
+  <div id="main-interface">
+    <div class="chat-wrapper">
+      <div class="chat-header">
+        <img src="logo.png" alt="Logo do Restaurante" class="chat-logo" />
+        <h1>Restaurante Poliedro</h1>
+      </div>
+      <div id="chat-messages" class="chat-messages"></div>
+      <div class="chat-input-area">
+        <input type="text" id="user-input" placeholder="Digite sua mensagem..." />
+        <button id="send-button">➤</button>
+      </div>
+      <div class="quick-buttons">
+        <button class="quick-btn" data-msg="Quero ver o cardápio">🍽️ Cardápio</button>
+        <button class="quick-btn" data-msg="Quais são os horários?">🕒 Horários</button>
+        <button class="quick-btn" data-msg="Quero fazer uma reserva">📅 Reservar</button>
+        <button id="view-reservation-btn">📋 Ver Reserva</button>
+        <button id="order-button">🛒 Fazer Pedido</button>
+        <button id="view-order-btn">📦 Ver Pedido</button>
+        <button id="kitchen-login-btn">🔒 Acesso Cozinha</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA DE LOGIN DA COZINHA (OCULTA POR PADRÃO) -->
+  <div id="kitchen-login-screen" class="chat-wrapper" style="display: none; flex-direction: column;">
     <div class="chat-header">
-      <img src="logo.png" alt="Logo do Restaurante" class="chat-logo">
-      <h1>Restaurante Poliedro</h1>
+      <h1>Acesso Cozinha</h1>
     </div>
-    <div id="chat-messages" class="chat-messages"></div>
-
-    <div class="chat-input-area">
-      <input type="text" id="user-input" placeholder="Digite sua mensagem...">
-      <button id="send-button">➤</button>
-    </div>
-
-    <div class="quick-buttons">
-      <button class="quick-btn" data-msg="Quero ver o cardápio">🍽️ Cardápio</button>
-      <button class="quick-btn" data-msg="Quais são os horários?">🕒 Horários</button>
-      <button class="quick-btn" data-msg="Quero fazer uma reserva">📅 Reservar</button>
-      <button id="view-reservation-btn">📋 Ver Reserva</button>
-      <button id="order-button">🛒 Fazer Pedido</button>
-      <button id="view-order-btn">📦 Ver Pedido</button>
+    <div class="kitchen-login-form" style="padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: center;">
+      <input id="kitchen-user" type="text" placeholder="Usuário" />
+      <input id="kitchen-pass" type="password" placeholder="Senha" style="margin-top: 10px;" />
+      <button id="login-submit-btn" style="margin-top: 15px;">Entrar</button>
+      <button id="login-back-btn" style="margin-top: 10px; background: #999;">Voltar</button>
     </div>
   </div>
 
