@@ -58,3 +58,10 @@ npm run build -- --force
 #### Instalação do gemini ####
 
 npm install @google/generative-ai
+
+
+### LOGIN PARA COZINHA (ADM) ###
+
+User: Cozinha@poliedro.com
+Senha: teste123
+
