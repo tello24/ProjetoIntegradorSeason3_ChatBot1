@@ -39,6 +39,16 @@ const menu = {
       { name: 'Salada com Kibe Vegano ou Quiche',           price: 'R$ 31,99' }
     ]
   };
+  // retorna o menu salvo no localStorage ou, se não existir, usa o menu padrão
+function getActiveMenu() {
+  const stored = localStorage.getItem('poliedroMenu');
+  try {
+    return stored ? JSON.parse(stored) : menu;
+  } catch {
+    return menu;
+  }
+}
+
   
   
     // BOAS-VINDAS
@@ -111,15 +121,20 @@ const menu = {
     }
   
     function showMenu() {
-      let html = '<h3>🍽️ Nosso Cardápio</h3>';
-      for (const [cat, items] of Object.entries(menu)) {
-        html += `<h4>${cat}</h4><ul>`;
-        items.forEach(i => html += `<li><strong>${i.name}</strong> – ${i.price}</li>`);
-        html += '</ul>';
-      }
-      html += '<p>Quer fazer um pedido ou reserva?</p>';
-      addBotMessage(html);
-    }
+  const activeMenu = getActiveMenu();
+
+  let html = '<h3>🍽️ Nosso Cardápio</h3>';
+  for (const [cat, items] of Object.entries(activeMenu)) {
+    html += `<h4>${cat}</h4><ul style="margin-bottom:16px;">`;
+    items.forEach(i => {
+      html += `<li style="margin-bottom:6px"><strong>${i.name}</strong> – ${i.price}</li>`;
+    });
+    html += '</ul>';
+  }
+  html += '<p>Quer fazer um pedido ou reserva?</p>';
+  addBotMessage(html);
+}
+
   
     function showHours() {
       addBotMessage(`🕒 Horário:<br>${restaurantInfo.hours}`);
