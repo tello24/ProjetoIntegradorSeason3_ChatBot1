@@ -2,15 +2,15 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // ─── Elementos ─────────────────────────────────────────────────────────────
-  const tableBody        = document.querySelector('#orders-table tbody');
-  const ordersTable      = document.getElementById('orders-table');
-  const noOrdersMsg      = document.getElementById('no-orders-msg');
-  const logoutBtn        = document.getElementById('kitchen-logout-btn');
-  const editMenuBtn      = document.getElementById('edit-menu-btn');
-  const menuEditor       = document.getElementById('menu-editor');
-  const editor           = document.getElementById('editor-categories');
-  const addCatBtn        = document.getElementById('add-category-btn');
-  const saveMenuBtn      = document.getElementById('save-menu-btn');
+  const tableBody   = document.querySelector('#orders-table tbody');
+  const ordersTable = document.getElementById('orders-table');
+  const noOrdersMsg = document.getElementById('no-orders-msg');
+  const logoutBtn   = document.getElementById('kitchen-logout-btn');
+  const editMenuBtn = document.getElementById('edit-menu-btn');
+  const menuEditor  = document.getElementById('menu-editor');
+  const editor      = document.getElementById('editor-categories');
+  const addCatBtn   = document.getElementById('add-category-btn');
+  const saveMenuBtn = document.getElementById('save-menu-btn');
 
   // ─── Cardápio padrão ─────────────────────────────────────────────────────────
   const defaultMenu = {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "Sobremesas": []
   };
 
-  // ─── Função para carregar cardápio do localStorage ───────────────────────────
+  // ─── Carrega cardápio do localStorage ────────────────────────────────────────
   function loadMenu() {
     try {
       const json = localStorage.getItem('poliedroMenu');
@@ -30,16 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ─── Renderiza a lista de pedidos na tabela ──────────────────────────────────
+  // ─── Renderiza pedidos na tabela, incluindo Cliente e RA ─────────────────────
   function renderKitchenOrders() {
     const orders = JSON.parse(localStorage.getItem('poliedroOrders') || '[]');
     tableBody.innerHTML = '';
+
     if (!orders.length) {
       ordersTable.style.display = 'none';
       noOrdersMsg.style.display = 'block';
     } else {
       ordersTable.style.display = 'table';
       noOrdersMsg.style.display = 'none';
+
       orders.forEach((o, i) => {
         const row = document.createElement('tr');
         const dt  = new Date(o.date).toLocaleString('pt-BR');
@@ -49,10 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${o.qty}</td>
           <td>${o.notes || '-'}</td>
           <td>${o.status}</td>
+          <td>${o.custName || '-'}</td>
+          <td>${o.custRA   || '-'}</td>
           <td>
-            <button class="action-btn progress"  data-index="${i}" data-action="progress">Em andamento</button>
-            <button class="action-btn complete"  data-index="${i}" data-action="complete">Concluir</button>
-            <button class="action-btn delete"    data-index="${i}" data-action="delete">Excluir</button>
+            <button class="action-btn progress" data-index="${i}" data-action="progress">Em andamento</button>
+            <button class="action-btn complete" data-index="${i}" data-action="complete">Concluir</button>
+            <button class="action-btn delete"   data-index="${i}" data-action="delete">Excluir</button>
           </td>
         `;
         tableBody.appendChild(row);
@@ -60,21 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ─── Cria e exibe blocos de categorias no editor ─────────────────────────────
+  // ─── Funções de edição do cardápio (inalteradas) ────────────────────────────
   function renderMenuEditor() {
     editor.innerHTML = '';
     const menu = loadMenu();
-    Object.entries(menu).forEach(([cat, items]) => {
-      addCategoryBlock(cat, items);
-    });
+    Object.entries(menu).forEach(([cat, items]) => addCategoryBlock(cat, items));
   }
-
-  // ─── Adiciona bloco de categoria com título e itens ─────────────────────────
   function addCategoryBlock(catName = '', items = []) {
     const block = document.createElement('div');
     block.className = 'category-block';
 
-    // Nome da categoria
+    // Título
     const titleInput = document.createElement('input');
     titleInput.placeholder = 'Nome da categoria';
     titleInput.value = catName;
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     titleInput.style.marginBottom = '8px';
     block.appendChild(titleInput);
 
-    // Container de itens
+    // Itens
     const list = document.createElement('div');
     items.forEach(it => addItemRow(list, it.name, it.price));
     block.appendChild(list);
@@ -102,8 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     editor.appendChild(block);
   }
-
-  // ─── Adiciona uma linha de item (nome, preço, remover) ───────────────────────
   function addItemRow(container, name = '', price = '') {
     const row = document.createElement('div');
     row.className = 'item-row';
@@ -125,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(row);
   }
 
-  // ─── Listeners do editor ────────────────────────────────────────────────────
   editMenuBtn.addEventListener('click', () => {
     if (menuEditor.style.display === 'block') {
       menuEditor.style.display = 'none';
@@ -134,11 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       menuEditor.style.display = 'block';
     }
   });
-
-  addCatBtn.addEventListener('click', () => {
-    addCategoryBlock('', []);
-  });
-
+  addCatBtn .addEventListener('click', () => addCategoryBlock('', []));
   saveMenuBtn.addEventListener('click', () => {
     const newMenu = {};
     Array.from(editor.children).forEach(block => {
@@ -146,9 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!catName) return;
       const items = [];
       block.querySelectorAll('.item-row').forEach(r => {
-        const inputs = r.querySelectorAll('input');
-        const n = inputs[0].value.trim();
-        const p = inputs[1].value.trim();
+        const [nIn, pIn] = r.querySelectorAll('input');
+        const n = nIn.value.trim(),
+              p = pIn.value.trim();
         if (n && p) items.push({ name: n, price: p });
       });
       newMenu[catName] = items;
@@ -158,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     menuEditor.style.display = 'none';
   });
 
-  // ─── Listener de logout ─────────────────────────────────────────────────────
+  // ─── Logout ─────────────────────────────────────────────────────────────────
   logoutBtn.addEventListener('click', () => {
     window.location.href = 'index.html';
   });
@@ -171,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const action = btn.dataset.action;
     const orders = JSON.parse(localStorage.getItem('poliedroOrders') || '[]');
 
-    if (action === 'delete')       orders.splice(idx, 1);
+    if (action === 'delete')        orders.splice(idx, 1);
     else if (action === 'progress') orders[idx].status = 'em andamento';
     else if (action === 'complete') orders[idx].status = 'concluído';
 
@@ -179,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderKitchenOrders();
   });
 
-  // ─── Inicialização ───────────────────────────────────────────────────────────
+  // ─── Inicialização ─────────────────────────────────────────────────────────
   menuEditor.style.display = 'none';
   renderKitchenOrders();
 });
