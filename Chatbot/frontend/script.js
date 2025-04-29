@@ -343,6 +343,13 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollToBottom();
   }
 
+  // ─── Registro do Service Worker (PWA) ───────────────────────────────────────
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registrado com sucesso:', reg.scope))
+      .catch(err => console.error('Falha ao registrar SW:', err));
+  }  
+
   function addBotMessage(html, isHTML = false) {
     const div = document.createElement('div');
     div.className = 'message bot-message';
