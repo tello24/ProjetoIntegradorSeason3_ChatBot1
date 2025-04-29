@@ -1,0 +1,5 @@
+[build]
+  # Não há etapa de build, pois é só HTML/CSS/JS estático
+  command = ""
+  # A pasta onde mora o index.html
+  publish = "Chatbot/frontend"
