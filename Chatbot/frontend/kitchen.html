@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cozinha  Restaurante Poliedro</title>
+  <!-- CSS Global do app -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- CSS Específico da Cozinha -->
+  <link rel="stylesheet" href="kitchen.css" />
+</head>
+<body>
+  <div class="kitchen-interface">
+    <!-- Cabeçalho com botões de editar e logout -->
+    <div class="kitchen-header">
+      <h1>📋 Pedidos na Cozinha</h1>
+      <div class="kitchen-header-buttons">
+        <button id="edit-menu-btn">✏️ Editar Cardápio</button>
+        <button id="kitchen-logout-btn">Logout</button>
+      </div>
+    </div>
+
+    <!-- Editor de Cardápio -->
+<div id="menu-editor" class="menu-editor">
+  <h2>Editor de Cardápio</h2>
+  <div id="editor-categories"></div>
+  <button id="add-category-btn">+ Adicionar Categoria</button>
+  <button id="save-menu-btn">Salvar Cardápio</button>
+</div>
+
+
+    <!-- Lista de Pedidos -->
+    <div class="kitchen-orders" id="kitchen-orders">
+      <table id="orders-table">
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Item</th>
+            <th>Qtd</th>
+            <th>Obs</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Linhas inseridas dinamicamente por kitchen.js -->
+        </tbody>
+      </table>
+      <p id="no-orders-msg">Nenhum pedido encontrado.</p>
+    </div>
+  </div>
+
+  <script src="kitchen.js"></script>
+</body>
+</html>
