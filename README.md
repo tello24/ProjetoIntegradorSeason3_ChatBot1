@@ -65,3 +65,10 @@ npm install @google/generative-ai
 User: Cozinha@poliedro.com
 Senha: teste123
 
+
+Service Workers só funcionam em HTTPS (ou em localhost, mas no iOS Safari costuma só aceitar em HTTPS mesmo). Se você está testando local:
+
+Use uma ferramenta como o http-server com SSL:
+
+npm install -g http-server
+http-server ./ -p 8080 --ssl --cert cert.pem --key key.pem

@@ -72,7 +72,8 @@ coverage/
 .nyc_output/
 *.junit
 *.xml
-*.html
+# *.html    ← comentada para não ignorar todos os .html
+coverage/**/*.html   # continua ignorando apenas os relatórios de cobertura
 
 ### Outros ###
 *.log
